@@ -1,0 +1,7 @@
+sessions/
+config.yaml
+memory.json
+memory.db
+heartbeat.md
+solutions.json
+cron.yaml

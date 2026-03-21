@@ -1,0 +1,40 @@
+name: debug_issue
+description: Systematic debugging — investigate, reproduce, fix, verify
+steps:
+  - template: researcher
+    task: |
+      Investigate the reported issue:
+      1. Search the codebase for relevant code
+      2. Read the related modules and understand the expected behavior
+      3. Check git log for recent changes that might have introduced the bug
+      4. Look for related error handling and edge cases
+      5. Identify the most likely root cause (form 2-3 hypotheses)
+      Report findings with specific file:line references and ranked hypotheses.
+  - template: test_runner
+    task: |
+      Try to reproduce the issue:
+      1. Run the existing test suite — are any tests already failing?
+      2. If possible, write a minimal test that reproduces the bug
+      3. Run the reproduction test to confirm it fails
+      Report: reproduction status, failing test output, related passing tests.
+  - template: coder
+    task: |
+      Fix the root cause based on investigation and reproduction:
+      1. Fix the root cause, not the symptom
+      2. Keep the fix minimal — don't refactor while fixing
+      3. Add a regression test that would have caught this bug
+      4. Update any related tests if the fix changes expected behavior
+      Show exact changes made.
+  - template: test_runner
+    task: |
+      Verify the fix:
+      1. Run the reproduction test — it should now pass
+      2. Run the full test suite — no regressions
+      3. Report final test results
+synthesis: |
+  Debugging summary:
+  - Root cause: what was wrong and why
+  - Fix: what was changed (files and line numbers)
+  - Verification: test results before and after
+  - Prevention: what regression test was added
+  - Related: any similar issues that might exist elsewhere

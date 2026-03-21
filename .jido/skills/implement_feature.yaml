@@ -1,0 +1,54 @@
+name: implement_feature
+description: Full feature implementation lifecycle — research, code, then test and review in parallel
+steps:
+  - name: research
+    template: researcher
+    task: |
+      Before writing any code, research the codebase to understand:
+      1. Where similar features are implemented (find patterns to follow)
+      2. What modules/files will need to be modified
+      3. What tests exist for related functionality
+      4. What the data model looks like
+      5. Any conventions or patterns that should be followed
+      Produce a brief implementation plan with specific files and functions to modify.
+  - name: implement
+    template: coder
+    depends_on: [research]
+    task: |
+      Implement the feature based on the research findings:
+      1. Follow the existing patterns identified in the research phase
+      2. Write the minimum code needed — no over-engineering
+      3. Add appropriate error handling at system boundaries
+      4. Update any configuration if needed
+      Show the exact changes made to each file.
+  - name: run_tests
+    template: test_runner
+    depends_on: [implement]
+    task: |
+      Verify the implementation:
+      1. Run the full test suite to check for regressions
+      2. If tests fail, report exactly which ones and why
+      3. Check if new tests should be written for the feature
+      Report test results with pass/fail counts and any failures.
+  - name: review_code
+    template: reviewer
+    depends_on: [implement]
+    task: |
+      Review the implementation:
+      1. Check the code changes for correctness and edge cases
+      2. Verify it follows project conventions
+      3. Check for security issues in new code
+      4. Assess test coverage of the new feature
+      Rate: APPROVED / NEEDS_CHANGES with specific feedback.
+  - name: synthesize
+    template: docs_writer
+    depends_on: [run_tests, review_code]
+    task: |
+      Summarize the feature implementation:
+      - What was implemented (brief description)
+      - Files modified/created
+      - Test results (pass/fail)
+      - Review verdict
+      - Any remaining work or known issues
+synthesis: |
+  Present the feature summary with test and review outcomes.

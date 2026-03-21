@@ -1,0 +1,8 @@
+name: explore_codebase
+description: Deep codebase exploration and documentation
+steps:
+  - template: researcher
+    task: "Explore the full project structure, key modules, dependencies, and architecture patterns"
+  - template: docs_writer
+    task: "Write a comprehensive project overview document based on the codebase analysis"
+synthesis: "Present the codebase overview with architecture diagram suggestions and key findings"

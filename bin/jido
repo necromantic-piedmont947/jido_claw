@@ -1,0 +1,28 @@
+#!/bin/bash
+# jido - Terminal AI coding agent
+# Launches the JidoClaw REPL targeting the current working directory,
+# or starts an MCP server when called with --mcp.
+#
+# Usage:
+#   jido                   # start REPL in current directory
+#   jido /path/to/project  # start REPL in target directory
+#   jido --mcp             # start MCP server (stdio transport)
+
+JIDO_HOME="${JIDO_HOME:-/Users/rhl/Desktop/JidoClaw}"
+
+# Default API key for local Ollama (any non-empty value works)
+export OLLAMA_API_KEY="${OLLAMA_API_KEY:-ollama}"
+
+if [ ! -d "$JIDO_HOME" ]; then
+  echo "Error: JidoClaw not found at $JIDO_HOME"
+  echo "Set JIDO_HOME to the JidoClaw project directory"
+  exit 1
+fi
+
+# Pass all arguments through so --mcp and directory args both work.
+if [ "$1" = "--mcp" ]; then
+  cd "$JIDO_HOME" && exec mix jidoclaw "$@"
+else
+  TARGET_DIR="${1:-$(pwd)}"
+  cd "$JIDO_HOME" && exec mix jidoclaw "$TARGET_DIR"
+fi

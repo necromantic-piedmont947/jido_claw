@@ -1,0 +1,28 @@
+name: onboard_dev
+description: Generate comprehensive onboarding documentation for new developers
+steps:
+  - template: researcher
+    task: |
+      Perform a thorough codebase analysis:
+      1. Project type, language, frameworks, and key dependencies
+      2. Directory structure with purpose of each top-level directory
+      3. Entry points (main, server, CLI, background jobs)
+      4. Configuration files and environment variables needed
+      5. Key modules and their responsibilities
+      6. Data flow for the most common user operations
+      7. Testing setup (framework, how to run, where tests live)
+      8. Build and deployment process
+      Document everything with specific file paths and code references.
+  - template: docs_writer
+    task: |
+      Using the codebase analysis, write a comprehensive onboarding guide:
+      1. Quick Start (prerequisites, setup, run, verify)
+      2. Architecture Overview (systems, layers, data flow)
+      3. Codebase Map (directory structure with annotations)
+      4. Key Files to Read First (ordered list with why)
+      5. Common Development Tasks (add feature, add test, debug, deploy)
+      6. Conventions and Patterns (naming, error handling, testing approach)
+      Write clearly — assume the reader is a competent developer but knows nothing about this project.
+synthesis: |
+  Present the complete onboarding documentation as a well-structured guide.
+  Include a "First Day Checklist" at the top with the 5 most important things to do.

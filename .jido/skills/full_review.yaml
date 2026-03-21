@@ -1,0 +1,14 @@
+name: full_review
+description: Run tests and code review in parallel, then synthesize findings
+steps:
+  - name: run_tests
+    template: test_runner
+    task: "Run the full test suite and report all results including failures, errors, and test counts"
+  - name: review_code
+    template: reviewer
+    task: "Review all recent git changes for bugs, security issues, and style violations"
+  - name: synthesize
+    template: docs_writer
+    task: "Combine the test results and code review findings into a single actionable report with priorities"
+    depends_on: [run_tests, review_code]
+synthesis: "Present the combined test and review findings with clear action items"
