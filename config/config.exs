@@ -215,7 +215,8 @@ config :jido_claw,
     JidoClaw.Security,
     JidoClaw.Forge.Domain,
     JidoClaw.Orchestration,
-    JidoClaw.GitHub
+    JidoClaw.GitHub,
+    JidoClaw.Folio
   ],
   token_signing_secret: "jidoclaw_dev_token_signing_secret_at_least_64_bytes_for_security"
 
