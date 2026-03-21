@@ -43,6 +43,7 @@ defmodule JidoClaw.Web.Router do
     live "/settings", SettingsLive
     live "/folio", FolioLive
     live "/sign-in", SignInLive
+    live "/setup", SetupLive
   end
 
   # Phoenix LiveDashboard (dev only)
