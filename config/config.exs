@@ -206,6 +206,27 @@ if System.get_env("DISCORD_BOT_TOKEN") do
     num_shards: :auto
 end
 
+# -- Ash Framework Config --
+config :jido_claw,
+  ecto_repos: [JidoClaw.Repo],
+  ash_domains: [
+    JidoClaw.Accounts,
+    JidoClaw.Projects
+  ],
+  token_signing_secret: "jidoclaw_dev_token_signing_secret_at_least_64_bytes_for_security"
+
+config :ash,
+  allow_forbidden_field_for_relationships_by_default?: true,
+  include_embedded_source_by_default?: false,
+  show_keysets_for_all_actions?: false,
+  default_page_type: :keyset,
+  policies: [no_filter_static_forbidden_reads?: false],
+  default_actions_require_atomic?: true,
+  bulk_actions_default_to_errors?: true,
+  known_types: [AshPostgres.Timestamptz, AshPostgres.TimestamptzUsec]
+
+config :phoenix, :json_library, Jason
+
 # Environment-specific overrides (test.exs, dev.exs, prod.exs).
 # Must be last so env config can override defaults set above.
 import_config "#{config_env()}.exs"

@@ -18,7 +18,7 @@ defmodule JidoClaw.MixProject do
 
   def application do
     [
-      extra_applications: [:logger, :inets, :ssl],
+      extra_applications: [:logger, :inets, :ssl, :runtime_tools],
       mod: {JidoClaw.Application, []},
       # Nostrum is started conditionally — see channel_children() in application.ex
     ]
@@ -39,6 +39,7 @@ defmodule JidoClaw.MixProject do
       {:jido_ai, "~> 2.0", override: true},
       {:jido_action, "~> 2.0", override: true},
       {:req_llm, "~> 1.6"},
+      {:libgraph, github: "zblanco/libgraph", branch: "zw/multigraph-indexes", override: true},
 
       # Jido ecosystem — full stack
       {:jido_signal, "~> 2.0", override: true},
@@ -80,13 +81,41 @@ defmodule JidoClaw.MixProject do
       # Discord (optional — only starts when DISCORD_BOT_TOKEN is set).
       # Excluded from the test env entirely: nostrum crashes at startup without a
       # valid token and the Discord adapter guards calls with Code.ensure_loaded/1.
-      {:nostrum, "~> 0.10", optional: true, runtime: false}
+      {:nostrum, "~> 0.10", optional: true, runtime: false},
+
+      # Ash framework and extensions
+      {:ash, "~> 3.0"},
+      {:ash_phoenix, "~> 2.0"},
+      {:ash_postgres, "~> 2.0"},
+      {:ash_json_api, "~> 1.0"},
+      {:ash_authentication, "~> 4.0"},
+      {:ash_authentication_phoenix, "~> 2.0"},
+      {:ash_admin, "~> 0.13"},
+      {:ash_archival, "~> 2.0"},
+      {:ash_paper_trail, "~> 0.5"},
+      {:ash_cloak, "~> 0.2"},
+      {:ash_state_machine, "~> 0.2"},
+
+      # Database
+      {:ecto_sql, "~> 3.13"},
+      {:postgrex, ">= 0.0.0"},
+
+      # Security & encryption
+      {:bcrypt_elixir, "~> 3.0"},
+      {:cloak, "~> 1.0"},
+
+      # Ash utilities
+      {:picosat_elixir, "~> 0.2"},
+      {:splode, "~> 0.3"}
     ]
   end
 
   defp aliases do
     [
-      setup: ["deps.get"]
+      setup: ["deps.get", "ash.setup"],
+      "ecto.setup": ["ecto.create", "ecto.migrate"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      test: ["ash.setup --quiet", "test"]
     ]
   end
 end

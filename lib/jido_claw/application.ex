@@ -42,6 +42,9 @@ defmodule JidoClaw.Application do
       {Registry, keys: :unique, name: JidoClaw.SessionRegistry},
       {Registry, keys: :unique, name: JidoClaw.TenantRegistry},
 
+      # Database
+      JidoClaw.Repo,
+
       # PubSub for real-time events
       {Phoenix.PubSub, name: JidoClaw.PubSub},
 

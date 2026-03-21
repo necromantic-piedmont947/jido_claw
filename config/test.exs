@@ -1,8 +1,11 @@
 import Config
 
-# Run in CLI mode — skip the Phoenix HTTP server in tests to avoid port conflicts.
-config :jido_claw,
-  mode: :cli
+config :jido_claw, mode: :cli
+config :logger, level: :warning
 
-config :logger,
-  level: :warning
+config :jido_claw, JidoClaw.Repo,
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "jido_claw_test#{System.get_env("MIX_TEST_PARTITION")}",
+  pool: Ecto.Adapters.SQL.Sandbox
