@@ -1,0 +1,70 @@
+defmodule JidoClaw.Forge do
+  alias JidoClaw.Forge.{Manager, SpriteSession}
+
+  defmodule SessionHandle do
+    defstruct [:session_id, :pid]
+  end
+
+  def start_session(session_id, spec) when is_binary(session_id) and is_map(spec) do
+    Manager.start_session(session_id, spec)
+  end
+
+  def get_handle(session_id) do
+    case Manager.get_session(session_id) do
+      {:ok, pid} -> {:ok, %SessionHandle{session_id: session_id, pid: pid}}
+      error -> error
+    end
+  end
+
+  def stop_session(session_id, reason \\ :normal) do
+    Manager.stop_session(session_id, reason)
+  end
+
+  def list_sessions, do: Manager.list_sessions()
+
+  def status(session_id), do: SpriteSession.status(session_id)
+
+  def run_iteration(session_id, opts \\ []) do
+    SpriteSession.run_iteration(session_id, opts)
+  end
+
+  def exec(session_id, command, opts \\ []) do
+    SpriteSession.exec(session_id, command, opts)
+  end
+
+  def cmd(%SessionHandle{session_id: sid}, command, args, opts \\ []) when is_list(args) do
+    escaped = Enum.map_join(args, " ", &shell_escape/1)
+    full_command = "#{command} #{escaped}"
+    exec(sid, full_command, opts)
+  end
+
+  def apply_input(session_id, input) do
+    SpriteSession.apply_input(session_id, input)
+  end
+
+  def run_loop(session_id, opts \\ []) do
+    max = Keyword.get(opts, :max_iterations, 50)
+    do_run_loop(session_id, opts, 0, max)
+  end
+
+  defp do_run_loop(_session_id, _opts, iteration, max) when iteration >= max do
+    {:ok, :max_iterations_reached}
+  end
+
+  defp do_run_loop(session_id, opts, iteration, max) do
+    case run_iteration(session_id, opts) do
+      {:ok, %{status: :done} = result} -> {:ok, result}
+      {:ok, %{status: :needs_input}} -> {:ok, :needs_input}
+      {:ok, %{status: :blocked}} -> {:ok, :blocked}
+      {:ok, %{status: :error} = result} -> {:error, result}
+      {:ok, %{status: :continue}} -> do_run_loop(session_id, opts, iteration + 1, max)
+      {:error, reason} -> {:error, reason}
+    end
+  end
+
+  defp shell_escape(arg) when is_binary(arg) do
+    "'" <> String.replace(arg, "'", "'\\''") <> "'"
+  end
+
+  defp shell_escape(arg), do: shell_escape(to_string(arg))
+end

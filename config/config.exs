@@ -212,7 +212,8 @@ config :jido_claw,
   ash_domains: [
     JidoClaw.Accounts,
     JidoClaw.Projects,
-    JidoClaw.Security
+    JidoClaw.Security,
+    JidoClaw.Forge.Domain
   ],
   token_signing_secret: "jidoclaw_dev_token_signing_secret_at_least_64_bytes_for_security"
 

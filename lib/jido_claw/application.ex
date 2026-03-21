@@ -48,6 +48,13 @@ defmodule JidoClaw.Application do
       # Encryption vault
       JidoClaw.Security.Vault,
 
+      # Forge sandbox execution engine
+      {Registry, keys: :unique, name: JidoClaw.Forge.SessionRegistry},
+      {DynamicSupervisor, name: JidoClaw.Forge.SpriteSupervisor, strategy: :one_for_one},
+      {DynamicSupervisor, name: JidoClaw.Forge.ExecSessionSupervisor, strategy: :one_for_one},
+      JidoClaw.Forge.Manager,
+      JidoClaw.Forge.SpriteClient.Fake,
+
       # PubSub for real-time events
       {Phoenix.PubSub, name: JidoClaw.PubSub},
 
