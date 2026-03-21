@@ -20,6 +20,12 @@ defmodule JidoClaw.Web.Router do
     post "/v1/chat/completions", ChatController, :create
   end
 
+  # GitHub webhooks (no auth pipeline — HMAC verified in controller)
+  scope "/webhooks", JidoClaw.Web do
+    pipe_through :api
+    post "/github", WebhookController, :github
+  end
+
   scope "/" do
     pipe_through :browser
     live_dashboard "/dashboard",

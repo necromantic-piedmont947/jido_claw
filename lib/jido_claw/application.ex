@@ -61,6 +61,10 @@ defmodule JidoClaw.Application do
       # Orchestration workflow feed
       JidoClaw.Orchestration.RunSummaryFeed,
 
+      # Code Server runtime management
+      {Registry, keys: :unique, name: JidoClaw.CodeServer.RuntimeRegistry},
+      {DynamicSupervisor, name: JidoClaw.CodeServer.RuntimeSupervisor, strategy: :one_for_one},
+
       # Finch HTTP pools
       {Finch, name: JidoClaw.Finch},
 
