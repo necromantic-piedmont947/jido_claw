@@ -211,7 +211,8 @@ config :jido_claw,
   ecto_repos: [JidoClaw.Repo],
   ash_domains: [
     JidoClaw.Accounts,
-    JidoClaw.Projects
+    JidoClaw.Projects,
+    JidoClaw.Security
   ],
   token_signing_secret: "jidoclaw_dev_token_signing_secret_at_least_64_bytes_for_security"
 
@@ -224,6 +225,17 @@ config :ash,
   default_actions_require_atomic?: true,
   bulk_actions_default_to_errors?: true,
   known_types: [AshPostgres.Timestamptz, AshPostgres.TimestamptzUsec]
+
+# Cloak Vault for encrypted secret storage
+config :jido_claw, JidoClaw.Security.Vault,
+  ciphers: [
+    default: {
+      Cloak.Ciphers.AES.GCM,
+      tag: "AES.GCM.V1",
+      key: Base.decode64!("dGhpc19pc19hX2Rldl9vbmx5X2tleV8zMl9ieXRlcw=="),
+      iv_length: 12
+    }
+  ]
 
 config :phoenix, :json_library, Jason
 

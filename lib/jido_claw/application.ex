@@ -45,6 +45,9 @@ defmodule JidoClaw.Application do
       # Database
       JidoClaw.Repo,
 
+      # Encryption vault
+      JidoClaw.Security.Vault,
+
       # PubSub for real-time events
       {Phoenix.PubSub, name: JidoClaw.PubSub},
 
