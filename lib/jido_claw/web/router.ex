@@ -1,6 +1,7 @@
 defmodule JidoClaw.Web.Router do
   use Phoenix.Router
   import Phoenix.LiveDashboard.Router
+  import Phoenix.LiveView.Router
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -9,10 +10,13 @@ defmodule JidoClaw.Web.Router do
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, html: {JidoClaw.Web.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
 
+  # API routes
   scope "/", JidoClaw.Web do
     pipe_through :api
 
@@ -20,15 +24,31 @@ defmodule JidoClaw.Web.Router do
     post "/v1/chat/completions", ChatController, :create
   end
 
-  # GitHub webhooks (no auth pipeline — HMAC verified in controller)
+  # GitHub webhooks (HMAC verified in controller)
   scope "/webhooks", JidoClaw.Web do
     pipe_through :api
     post "/github", WebhookController, :github
   end
 
+  # LiveView routes (authenticated)
+  scope "/", JidoClaw.Web do
+    pipe_through :browser
+
+    live "/", DashboardLive
+    live "/dashboard", DashboardLive
+    live "/forge", ForgeLive
+    live "/workflows", WorkflowsLive
+    live "/agents", AgentsLive
+    live "/projects", ProjectsLive
+    live "/settings", SettingsLive
+    live "/folio", FolioLive
+    live "/sign-in", SignInLive
+  end
+
+  # Phoenix LiveDashboard (dev only)
   scope "/" do
     pipe_through :browser
-    live_dashboard "/dashboard",
+    live_dashboard "/live-dashboard",
       metrics: JidoClaw.Telemetry,
       ecto_repos: []
   end

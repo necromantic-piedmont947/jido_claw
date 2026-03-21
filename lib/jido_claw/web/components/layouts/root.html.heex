@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <title>JidoClaw</title>
+    <style>
+      :root { --bg: #0a0a0f; --surface: #12121a; --border: #1e1e2e; --text: #e4e4e7; --muted: #71717a; --accent: #818cf8; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { background: var(--bg); color: var(--text); font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace; }
+      .nav-link { color: var(--muted); text-decoration: none; padding: 0.5rem 1rem; border-radius: 0.375rem; transition: all 0.15s; }
+      .nav-link:hover, .nav-link.active { color: var(--text); background: var(--surface); }
+      .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+      .card { background: var(--surface); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.5rem; }
+      .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 0.375rem; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; font-family: inherit; transition: all 0.15s; }
+      .btn:hover { border-color: var(--accent); }
+      .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+      .badge { display: inline-flex; padding: 0.125rem 0.5rem; border-radius: 9999px; font-size: 0.75rem; }
+      .badge-green { background: #065f4620; color: #4ade80; }
+      .badge-yellow { background: #854d0e20; color: #facc15; }
+      .badge-red { background: #7f1d1d20; color: #f87171; }
+      .badge-blue { background: #1e3a5f20; color: #60a5fa; }
+      table { width: 100%; border-collapse: collapse; }
+      th { text-align: left; color: var(--muted); font-weight: 500; font-size: 0.75rem; text-transform: uppercase; padding: 0.75rem; border-bottom: 1px solid var(--border); }
+      td { padding: 0.75rem; border-bottom: 1px solid var(--border); }
+      input, select, textarea { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.5rem 0.75rem; border-radius: 0.375rem; font-family: inherit; width: 100%; }
+      input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+      .flash { padding: 0.75rem 1rem; border-radius: 0.5rem; margin-bottom: 1rem; }
+      .flash-info { background: #1e3a5f40; border: 1px solid #60a5fa40; }
+      .flash-error { background: #7f1d1d40; border: 1px solid #f8717140; }
+    </style>
+    <script defer phx-track-static src="/assets/app.js"></script>
+  </head>
+  <body>
+    {@inner_content}
+  </body>
+</html>

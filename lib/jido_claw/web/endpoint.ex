@@ -14,6 +14,12 @@ defmodule JidoClaw.Web.Endpoint do
   socket "/ws", JidoClaw.Web.UserSocket,
     websocket: true
 
+  plug Plug.Static,
+    at: "/",
+    from: :jido_claw,
+    gzip: false,
+    only: ~w(assets fonts images favicon.ico robots.txt)
+
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
