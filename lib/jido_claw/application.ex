@@ -58,6 +58,9 @@ defmodule JidoClaw.Application do
       # PubSub for real-time events
       {Phoenix.PubSub, name: JidoClaw.PubSub},
 
+      # Orchestration workflow feed
+      JidoClaw.Orchestration.RunSummaryFeed,
+
       # Finch HTTP pools
       {Finch, name: JidoClaw.Finch},
 

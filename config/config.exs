@@ -213,7 +213,8 @@ config :jido_claw,
     JidoClaw.Accounts,
     JidoClaw.Projects,
     JidoClaw.Security,
-    JidoClaw.Forge.Domain
+    JidoClaw.Forge.Domain,
+    JidoClaw.Orchestration
   ],
   token_signing_secret: "jidoclaw_dev_token_signing_secret_at_least_64_bytes_for_security"
 
